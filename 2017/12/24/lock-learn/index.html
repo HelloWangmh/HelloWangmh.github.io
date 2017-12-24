@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="多线程," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="每天进步一点">
-<meta property="og:type" content="website">
-<meta property="og:title" content="学习笔记">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="Lock锁原理及总结 Lock接口的实现基本都是通过聚合一个同步器AbstractQueuedSynchronizer的子类来完成线程访问控制的,使用一个int变量来控制同步状态,通过内置的FIFO队列来完成线程的排队工具. 同步器提供了三类模板方法:独占式获取与释放同步状态,共享式获取与释放同步状态,查询同步队列 公平锁保证了锁的获取按照FIFO原则,而代价就是大量的线程切换.非公平锁可能会造成">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lock锁原理及总结">
+<meta property="og:url" content="http://yoursite.com/2017/12/24/lock-learn/index.html">
 <meta property="og:site_name" content="学习笔记">
-<meta property="og:description" content="每天进步一点">
+<meta property="og:description" content="Lock锁原理及总结 Lock接口的实现基本都是通过聚合一个同步器AbstractQueuedSynchronizer的子类来完成线程访问控制的,使用一个int变量来控制同步状态,通过内置的FIFO队列来完成线程的排队工具. 同步器提供了三类模板方法:独占式获取与释放同步状态,共享式获取与释放同步状态,查询同步队列 公平锁保证了锁的获取按照FIFO原则,而代价就是大量的线程切换.非公平锁可能会造成">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-24T14:20:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="学习笔记">
-<meta name="twitter:description" content="每天进步一点">
+<meta name="twitter:title" content="Lock锁原理及总结">
+<meta name="twitter:description" content="Lock锁原理及总结 Lock接口的实现基本都是通过聚合一个同步器AbstractQueuedSynchronizer的子类来完成线程访问控制的,使用一个int变量来控制同步状态,通过内置的FIFO队列来完成线程的排队工具. 同步器提供了三类模板方法:独占式获取与释放同步状态,共享式获取与释放同步状态,查询同步队列 公平锁保证了锁的获取按照FIFO原则,而代价就是大量的线程切换.非公平锁可能会造成">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/24/lock-learn/"/>
 
 
 
 
 
-  <title>学习笔记</title>
+  <title>Lock锁原理及总结 | 学习笔记</title>
   
 
 
@@ -143,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,9 +248,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -279,9 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/24/lock-learn/" itemprop="url">Lock锁原理及总结</a></h1>
+          <h1 class="post-title" itemprop="name headline">Lock锁原理及总结</h1>
         
 
         <div class="post-meta">
@@ -331,9 +330,7 @@
       
 
       
-        
-          
-            <h1 id="Lock锁原理及总结"><a href="#Lock锁原理及总结" class="headerlink" title="Lock锁原理及总结"></a>Lock锁原理及总结</h1><ul>
+        <h1 id="Lock锁原理及总结"><a href="#Lock锁原理及总结" class="headerlink" title="Lock锁原理及总结"></a>Lock锁原理及总结</h1><ul>
 <li>Lock接口的实现基本都是通过聚合一个同步器AbstractQueuedSynchronizer的子类来完成线程访问控制的,使用一个int变量来控制同步状态,通过内置的FIFO队列来完成线程的排队工具.</li>
 <li>同步器提供了三类模板方法:独占式获取与释放同步状态,共享式获取与释放同步状态,查询同步队列</li>
 <li>公平锁保证了锁的获取按照FIFO原则,而代价就是大量的线程切换.非公平锁可能会造成线程’饥饿’,但是减少了线程切换,保证了其更大的吞吐量.</li>
@@ -350,8 +347,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">shouldParkAfterFailedAcquire</span><span class="params">(Node pred, Node node)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> ws = pred.waitStatus;</div><div class="line">    <span class="keyword">if</span> (ws == Node.SIGNAL)</div><div class="line">        <span class="comment">/*</span></div><div class="line"><span class="comment">         *表示后继节点处于等待状态</span></div><div class="line"><span class="comment">         * This node has already set status asking a release</span></div><div class="line"><span class="comment">         * to signal it, so it can safely park.</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span> (ws &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="comment">/*</span></div><div class="line"><span class="comment">         * Predecessor was cancelled. Skip over predecessors and</span></div><div class="line"><span class="comment">         * indicate retry.</span></div><div class="line"><span class="comment">         * 给node换一个前继节点</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            node.prev = pred = pred.prev;</div><div class="line">        &#125; <span class="keyword">while</span> (pred.waitStatus &gt; <span class="number">0</span>);</div><div class="line">        pred.next = node;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">/*</span></div><div class="line"><span class="comment">         * waitStatus must be 0 or PROPAGATE.  Indicate that we</span></div><div class="line"><span class="comment">         * need a signal, but don't park yet.  Caller will need to</span></div><div class="line"><span class="comment">         * retry to make sure it cannot acquire before parking.</span></div><div class="line"><span class="comment">         */</span></div><div class="line">         将前继节点设置为Node.SIGNAL</div><div class="line">        compareAndSetWaitStatus(pred, ws, Node.SIGNAL);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="unlock"><a href="#unlock" class="headerlink" title="unlock"></a>unlock</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//释放同步状态</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">release</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</div><div class="line">	<span class="comment">//若设置state成功,那么唤醒后继节点</span></div><div class="line">    <span class="keyword">if</span> (tryRelease(arg)) &#123;</div><div class="line">        Node h = head;</div><div class="line">        <span class="keyword">if</span> (h != <span class="keyword">null</span> &amp;&amp; h.waitStatus != <span class="number">0</span>)</div><div class="line">        	  <span class="comment">//唤醒后继节点</span></div><div class="line">            unparkSuccessor(h);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-          
-        
       
     </div>
     
@@ -366,298 +361,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/vim-learn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="骚动的石头">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/zilaiye.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/28/vim-learn/" itemprop="url">Vim学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:06:20+08:00">
-                2017-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Vim的三个模式"><a href="#Vim的三个模式" class="headerlink" title="Vim的三个模式"></a>Vim的三个模式</h2><p>Vim共分为三个模式,如下图所示</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1flvwgadf3sj30mt0boq64.jpg" alt=""></p>
-<h2 id="进入编辑模式"><a href="#进入编辑模式" class="headerlink" title="进入编辑模式"></a>进入编辑模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">i : 光标前插入</div><div class="line">I : 光标当前行插入</div><div class="line">o : 光标当前行的下一行</div><div class="line">O : 光标当前行的上一行</div><div class="line">a : 光标后插入</div><div class="line">A : 光标所在行末尾插入</div></pre></td></tr></table></figure>
-<h2 id="低行命令"><a href="#低行命令" class="headerlink" title="低行命令"></a>低行命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">:表示进入低行模式,命令以回车结束</div><div class="line">q  : 退出</div><div class="line">q! : 强制退出</div><div class="line">w  : 保存</div><div class="line">wq : 保存退出</div><div class="line">help &lt;command&gt;: 显示相关命令</div><div class="line">e file : 打开文件</div><div class="line">saveas file: 另存为</div><div class="line">split : 分屏</div><div class="line">vsplit : 垂直分屏</div></pre></td></tr></table></figure>
-<p>接下来的命令都是在一般模式下执行</p>
-<h2 id="光标移动命令"><a href="#光标移动命令" class="headerlink" title="光标移动命令"></a>光标移动命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0  : 到行头</div><div class="line">$  : 到行尾</div><div class="line">^  : 到本行第一个不是blank字符的位置（所谓blank字符就是空格，tab，换行，回车等）</div><div class="line">g_ : 到本行最后一个非black字符</div><div class="line">NG : 到第N行</div><div class="line">gg : 到第一行</div><div class="line">G  : 到最后一行</div><div class="line">*  : 根据光标所在单词,匹配到下一个</div><div class="line">#  : 根据光标所在单词,匹配到上一个</div><div class="line">hjkl : 分别表示上下左右</div><div class="line">/pattern : 搜索,n到下一个</div></pre></td></tr></table></figure>
-<h2 id="操作数据命令"><a href="#操作数据命令" class="headerlink" title="操作数据命令"></a>操作数据命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dd : 剪切所在行数据</div><div class="line">p  : 粘贴</div><div class="line">yy : 复制所在行数据</div><div class="line">u  : 撤销</div><div class="line">gU : 变大写</div><div class="line">gu : 变小写</div><div class="line">v  : 可视化,选择数据</div><div class="line">ctrl + r : 反撤销</div></pre></td></tr></table></figure>
-<h2 id="重复操作命令"><a href="#重复操作命令" class="headerlink" title="重复操作命令"></a>重复操作命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">. : 重复上一次的命令</div><div class="line">N&lt;command&gt; : 重复command N次</div></pre></td></tr></table></figure>
-<h2 id="块操作"><a href="#块操作" class="headerlink" title="块操作"></a>块操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Ctrl + v : 开始块操作,可以通过hjkl来控制方向,通过I插入,然后Esc后会对每一行都生效</div><div class="line">v : 可视化模式,可以操作选中的数据,</div><div class="line">	 如 J : 所有行连接, </div><div class="line">		&lt; 或 &gt; 进行左右缩进, </div><div class="line">		= : 自动给缩进</div></pre></td></tr></table></figure>
-<h2 id="宏录制"><a href="#宏录制" class="headerlink" title="宏录制"></a>宏录制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">qa : 开始录制,然后可以进行一系列操作</div><div class="line">q  : 停止录制</div><div class="line">@a : 重复刚才录制的宏,重复一次后可以直接通过@@调用</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/12/java9-learn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="骚动的石头">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/zilaiye.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/12/java9-learn/" itemprop="url">java9新特性学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T20:22:47+08:00">
-                2017-11-12
-              </time>
+              <a href="/2017/11/28/vim-learn/" rel="next" title="Vim学习笔记">
+                <i class="fa fa-chevron-left"></i> Vim学习笔记
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h1><p>模块化(Modular)是java9中影响最大的一个特性,它将自己长期依赖JRE的结构，转变成以Module为基础的组件.</p>
-<p>模块化的功能有以下几个目的：</p>
-<ul>
-<li>让Java的SE程序更加容易轻量级部署</li>
-</ul>
-<ul>
-<li>改进组件间的依赖管理，引入比Jar粒度更大的Module</li>
-</ul>
-<ul>
-<li>改进性能和安全性</li>
-</ul>
-<h3 id="首先看模块的定义"><a href="#首先看模块的定义" class="headerlink" title="首先看模块的定义"></a>首先看模块的定义</h3><p>模块就是代码和数据的封装体，代码是指一些包括类型的Packages。Package是一些类路径名字的约定，而模块是一个或多个Packages组成的一个封装体。<br>可以在根目录下创建一个module-info.java的文件,来定义一个模块.<br><img src="https://i.imgur.com/9Tjk7uE.png" alt=""></p>
-<h3 id="模块的代码"><a href="#模块的代码" class="headerlink" title="模块的代码"></a>模块的代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.sql.SQLException;</div><div class="line"><span class="keyword">import</span> java.util.logging.Logger;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = Logger.getLogger(<span class="string">"one"</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        log.info(<span class="string">"Hello World!"</span>);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SQLException();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样的一段代码,如果在java9之前只需要import对应类(类如果是public)就可以运行,如果在java9中还需要在module-info.java文件中引入对应的模块 : </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">module</span> one &#123;</div><div class="line">    <span class="keyword">requires</span> java.logging;</div><div class="line">    <span class="keyword">requires</span> java.sql;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>java9之前只要是public的类就代表可访问,引入模块化之后public类可访问的前提是对应类所在的模块可读,并且这个模块显示export了这个类 :<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">module</span> java.logging &#123;</div><div class="line">    <span class="keyword">exports</span> java.util.logging;</div><div class="line"></div><div class="line">    provides jdk.internal.logger.DefaultLoggerFinder with sun.util.logging.internal.LoggingProviderImpl;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>现在再看看java.sql这个模块:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">module</span> java.sql &#123;</div><div class="line">    <span class="keyword">requires</span> transitive java.xml;</div><div class="line">    <span class="keyword">requires</span> transitive java.logging;</div><div class="line"></div><div class="line">    <span class="keyword">exports</span> javax.transaction.xa;</div><div class="line">    <span class="keyword">exports</span> javax.sql;</div><div class="line">    <span class="keyword">exports</span> java.sql;</div><div class="line"></div><div class="line">    uses java.sql.Driver;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>transitive 标识间接可读性,因此如果已经引入了 java.sql模块,就需要再引入java.logging模块了</p>
-<h1 id="集合工厂"><a href="#集合工厂" class="headerlink" title="集合工厂"></a>集合工厂</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;Integer&gt; list = List.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">Set&lt;String&gt; set = Set.of(<span class="string">"aaa"</span>, <span class="string">"bbb"</span>, <span class="string">"ccc"</span>);</div></pre></td></tr></table></figure>
-<p>生成后集合是不可变的,不能继续add,remove,否则 throw UnsupportedOperationException</p>
-<h1 id="Stream接口新增方法"><a href="#Stream接口新增方法" class="headerlink" title="Stream接口新增方法"></a>Stream接口新增方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;Integer&gt; list = List.of(<span class="number">4</span>,<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div></pre></td></tr></table></figure>
-<p>takeWhile(Predicate&lt;? super T&gt; predicate) : 返回遇到false之前的所有元素</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">list.stream().takeWhile(i -&gt; i &gt; <span class="number">1</span>).forEach(System.out :: println); </div><div class="line"> <span class="comment">//4</span></div></pre></td></tr></table></figure>
-<p>dropWhile(Predicate&lt;? super T&gt; predicate) : 丢弃符合条件的元素</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">list.stream().dropWhile(i -&gt; i == <span class="number">4</span>).forEach(System.out :: println);</div><div class="line"><span class="comment">// 1  2  3</span></div></pre></td></tr></table></figure>
-<h1 id="HTTP调用"><a href="#HTTP调用" class="headerlink" title="HTTP调用"></a>HTTP调用</h1><p>java9之前访问url的方式,支持HTTP1.1</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">URL url = <span class="keyword">new</span> URL(<span class="string">"https://www.baidu.com/"</span>);</div><div class="line">URLConnection connection = url.openConnection();</div><div class="line">connection.connect();</div><div class="line">InputStream in = connection.getInputStream();</div><div class="line">Scanner sc = <span class="keyword">new</span> Scanner(in, <span class="string">"UTF-8"</span>);</div><div class="line"><span class="keyword">while</span> (sc.hasNext())&#123;</div><div class="line">    System.out.println(sc.nextLine());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> java9新的API,支持HTTP2.0,但是这属于没有最终做出来的功能，转而成为孵化器功能，默认情况下不可访问,需要在model-info文件中引入jdk.incubator.httpclient;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HttpClient client = HttpClient.newHttpClient();</div><div class="line">HttpRequest req =</div><div class="line">            HttpRequest.newBuilder(URI.create(<span class="string">"https://www.baidu.com/"</span>))</div><div class="line">                    .header(<span class="string">"User-Agent"</span>,<span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"</span>)</div><div class="line">                    .GET()</div><div class="line">                    .build();</div><div class="line">HttpResponse&lt;String&gt; resp = client.send(req, HttpResponse.BodyHandler.asString());</div><div class="line">System.out.println(resp.statusCode());<span class="comment">//状态码</span></div><div class="line">System.out.println(resp.body()); <span class="comment">//响应内容</span></div></pre></td></tr></table></figure>
-<h1 id="进程信息的监控"><a href="#进程信息的监控" class="headerlink" title="进程信息的监控"></a>进程信息的监控</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ProcessHandle currentProcess = ProcessHandle.current();</div><div class="line">System.out.println(<span class="string">"Current Process Id: = "</span> + currentProcess.pid());</div><div class="line">ProcessHandle.Info info = currentProcess.info();</div><div class="line"><span class="comment">//系统用户</span></div><div class="line">System.out.println(<span class="string">"user : = "</span> + info.user().get());</div><div class="line"><span class="comment">//启动命令  JAVA_HOME/bin/java</span></div><div class="line">System.out.println(<span class="string">"command : = "</span> + info.command().get());</div><div class="line"><span class="comment">//启动参数 如-Dspring.profile=prod</span></div><div class="line">System.out.println(<span class="string">"arguments : = "</span> + Arrays.toString(info.arguments().get()));</div></pre></td></tr></table></figure>
-<p>#私有接口<br>Java 8 为我们带来了接口的默认方法,如果存在多个含有重复代码的默认方法,可以将重复代码放入一个私有的方法中.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">printMeg</span><span class="params">(String msg)</span></span>&#123;toPrint(msg);&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">toPrint</span><span class="params">(String msg)</span></span>&#123;</div><div class="line">    System.out.println(msg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="Jshell-交互式编程环境"><a href="#Jshell-交互式编程环境" class="headerlink" title="Jshell 交互式编程环境"></a>Jshell 交互式编程环境</h1><p>可以从控制台输入jshell来启动,然后输入和执行Java 代码。</p>
-<p><img src="https://i.imgur.com/dcZVRK4.jpg" alt=""><br>同时提供了一些命令,可以通过输入/help查看</p>
-<p>比如: /vars命令,用来查看已定义的变量:<br><img src="https://i.imgur.com/sGGKMXX.jpg" alt=""></p>
-<p> /open filePath  命令用来打开一个文件,并读取其内容作为命令,test.txt中内容为System.out.print(1):<br><img src="https://i.imgur.com/yXCjR8b.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -667,10 +400,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -678,6 +412,8 @@
 
 
           
+  
+
 
         </div>
         
@@ -698,8 +434,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -770,6 +515,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock锁原理及总结"><span class="nav-number">1.</span> <span class="nav-text">Lock锁原理及总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lock"><span class="nav-number">1.1.</span> <span class="nav-text">lock :</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unlock"><span class="nav-number">1.2.</span> <span class="nav-text">unlock</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -885,6 +646,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
