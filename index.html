@@ -281,7 +281,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/14/jvm-02/" itemprop="url">jvm-02</a></h1>
+                <a class="post-title-link" href="/2018/03/14/jvm-02/" itemprop="url">jvm读书笔记-垃圾回收算法</a></h1>
         
 
         <div class="post-meta">
@@ -333,7 +333,73 @@
       
         
           
-            
+            <h2 id="如何判断对象是否存活"><a href="#如何判断对象是否存活" class="headerlink" title="如何判断对象是否存活?"></a>如何判断对象是否存活?</h2><ul>
+<li><p>引用计数法</p>
+<p>  给对象添加一个引用计数器,每当一个地方引用它时,计数器加1,当引用失效时,计数器值就减少1,计数器为0的对象可以被判断为无引用的对象,但是缺陷是无法解决对象之间相互循环引用的问题</p>
+</li>
+<li><p>可达性分析算法</p>
+<p>通过一系列的称为”GC Roots”的对象作为起始点,当一个对象到GC Roots没有任何引用链相连时,则证明这个对象是不可达的.</p>
+<p>Java中,可作为GC Roots的对象包括 : </p>
+<ul>
+<li>虚拟机栈的栈帧中局部变量表引用的对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中JNI(Java Native Interface)引用的对象</li>
+</ul>
+<p>如下图,蓝色的对象为存活对象.<br><img src="https://plumbr.io/wp-content/uploads/2015/05/Java-GC-mark-and-sweep.png" alt=""></p>
+</li>
+</ul>
+<h2 id="如何清理废弃对象"><a href="#如何清理废弃对象" class="headerlink" title="如何清理废弃对象?"></a>如何清理废弃对象?</h2><p>GC通过可达性分析算法遍历内存中的对象,从GC Roots开始扫描,所有可以访问的对象被标记为存活对象,标记阶段需要暂停应用线程,以遍历所有对象的引用关系,这种情景叫做Stop The World.</p>
+<p>GC在删除不可达对象时候,会有不同的算法 : </p>
+<ul>
+<li><p>标记清除算法</p>
+<p>  分为标记和清除两个阶段,首先标记需要回收的对象然后直接清除,但是这样做不仅需要一个空闲表来维护内存中的空闲区域,而且会产生很多空间碎片,导致在分配大对象时候,可能明明内存足够,但是找不到足够的连续内存<br><img src="https://plumbr.io/wp-content/uploads/2015/06/GC-sweep.png" alt=""></p>
+</li>
+<li><p>标记整理算法</p>
+<p>  与标记清除算法相比,标记整理算法会把活着的对象,迁移到内存空间的起始处,这样不会再导致内存碎片的问题,缺点是花费时间来移动对象.<br>  <img src="https://plumbr.io/wp-content/uploads/2015/06/GC-mark-sweep-compact.png" alt=""></p>
+</li>
+<li><p>标记复制算法</p>
+<p>  标记复制算法也会移动活的对象,不同之处是标记算法会把活的对象复制到另外一个叫做存活区的地方,不仅提高效率而且防止了内存碎片,缺点是需要浪费很多内存.</p>
+<p>  <img src="https://plumbr.io/wp-content/uploads/2015/06/GC-mark-and-copy-in-Java.png" alt=""></p>
+<p>  JVM的新生代在垃圾回收的时候采用的就是标记复制算法,因为新生代中的对象大部分都是”朝生夕死”的,只要将新生代划分为一块较大的Eden空间和两块较小的Survivor空间,每次使用Eden和其中一块Survivor空间,当回收时,将存活的对象复制到另外一块Survivor空间,最后清理掉Eden空间和刚才用过的Survivor空间,所以总会有一个空的Survivor空间,HotSpot虚拟机默认Eden和Survivor的大小比例是8:1,所以只会浪费10%的空间.</p>
+<p>  JVM的老年代由于对象存活率高,一般使用标记清理或标记整理算法来进行回收</p>
+</li>
+</ul>
+<h2 id="常用的垃圾收集器"><a href="#常用的垃圾收集器" class="headerlink" title="常用的垃圾收集器"></a>常用的垃圾收集器</h2><ul>
+<li><p>Serial收集器</p>
+<p>Serial收集器有新生代和老年代版本,新生代使用标记复制算法,老年代使用标记整理算法,这两个都是单线程收集器,都会触发STW,停止所有应用线程,可以通过-XX:+UseSerialGC参数来启用这个收集器,单核cpu时比较适合使用.</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/d39a1775ly1fpcsyhp9bqj21gu0b040e.jpg" alt=""></p>
+</li>
+<li><p>ParNew收集器</p>
+<p>  是Serial收集器的多线程版本,可以并行多个线程去进行垃圾清理,它只有新生代代版本,采用标记复制算法.</p>
+</li>
+<li><p>Parallel Scavenge收集器</p>
+<p>  Parallel Scavenge收集器有新生代和老年代版本,新生代使用标记复制算法,老年代使用标记整理算法,是并行的多线程收集器.Parallel Scavenge收集器的关注点是达到一个可控制的吞吐量,其他收集器都是关注如何停顿时间更短.</p>
+<p>  高吞吐量可以高效率利用CPU时间,尽快完成程序计算任务,主要是和在后台运算而不需要太多交互的任务.</p>
+<p>  <img src="http://wx2.sinaimg.cn/mw690/d39a1775ly1fpctsn2fkej21hg0c276f.jpg" alt=""></p>
+<p>  常用的三个参数 : </p>
+<ul>
+<li>-XX:MaxGCPauseMillis参数(毫秒)设置最大垃圾收集停顿时间</li>
+<li>-XX:GCTimeRatio参数(1-99)设置吞吐量</li>
+<li>-XX:+UseAdaptiveSizePolicy参数是一个开关,打开后虚拟机会根据系统运行情况收集性能监控信息,动态调整这些参数以提供最合适的停顿时间或最大吞吐量.</li>
+</ul>
+</li>
+<li><p>Concurrent Mark and Sweep(CMS)收集器</p>
+<p>  CMS收集器是一种以获取最短停顿时间为目标的老年代收集器,对老年代采用标记清除算法,<br>通过-XX:+UseConcMarkSweepGC指定使用CMS垃圾收集器,CMS收集器通过以下两种方式缩小停顿时间 : </p>
+<ol>
+<li>不对老年代进行整理,而是使用空闲列表管理内存空间</li>
+<li>在标记清楚阶段的大部分工作是和应用线程一起并发进行</li>
+</ol>
+</li>
+<li><p>Garbage First(G1)收集器</p>
+<p>  G1收集器的目标是将STW停顿的时间和分布变成可预期以及可配置的,为了达到这个目标,堆不再是连续的新生代和老年代空间,而是多个小堆区,每个小堆区可能是Eden区或Survivor区或Old区,这样可以以增量方式回收垃圾.</p>
+<p>  可以通过-XX:+UseG1GC来启用这个收集器,现在还在不断优化中,可能是Java9的默认收集器.</p>
+</li>
+</ul>
+<pre><code>以下是四组常用的收集器组合 : 
+&lt;table&gt;
+</code></pre><p>  <tr><br>    <th width="10%"> Young </th><br>    <th width="40%"> Tenured</th><br>    <th width="50%">JVM options</th><br>  </tr><br>  <tr><br>    <td> Serial </td><br>    <td> Serial </td><br>    <td> -XX:+UseSerialGC  </td><br>  </tr><br>  <tr><br>    <td>Parallel Scavenge</td><br>    <td> Parallel Old </td><br>    <td> -XX:+UseParallelGC -XX:+UseParallelOldGC</td><br>  </tr><tr><br>    <td>Parallel New</td><br>    <td> CMS </td><br>    <td>  -XX:+UseParNewGC -XX:+UseConcMarkSweepGC </td><br>  </tr><br>  <tr><br>    <td colspan="2"> G1 </td><br>    <td> -XX:+UseG1GC </td><br>  </tr><br>    </p>
+
           
         
       
