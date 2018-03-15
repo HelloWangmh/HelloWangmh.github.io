@@ -396,9 +396,17 @@
 <p>  可以通过-XX:+UseG1GC来启用这个收集器,现在还在不断优化中,可能是Java9的默认收集器.</p>
 </li>
 </ul>
-<pre><code>以下是四组常用的收集器组合 : 
-&lt;table&gt;
-</code></pre><p>  <tr><br>    <th width="10%"> Young </th><br>    <th width="40%"> Tenured</th><br>    <th width="50%">JVM options</th><br>  </tr><br>  <tr><br>    <td> Serial </td><br>    <td> Serial </td><br>    <td> -XX:+UseSerialGC  </td><br>  </tr><br>  <tr><br>    <td>Parallel Scavenge</td><br>    <td> Parallel Old </td><br>    <td> -XX:+UseParallelGC -XX:+UseParallelOldGC</td><br>  </tr><tr><br>    <td>Parallel New</td><br>    <td> CMS </td><br>    <td>  -XX:+UseParNewGC -XX:+UseConcMarkSweepGC </td><br>  </tr><br>  <tr><br>    <td colspan="2"> G1 </td><br>    <td> -XX:+UseG1GC </td><br>  </tr><br>    </p>
+<p>以下是四组常用的收集器组合 : </p>
+<table><tr><th width="20%">Young</th><th width="30%">Tenured</th><th width="50%">JVM options</th></tr><br>    <tr><td>Serial</td><td>Serial</td><td>-XX:+UseSerialGC</td></tr><br>    <tr><td>Parallel Scavenge</td><td>Parallel Old</td><td>-XX:+UseParallelGC -XX:+UseParallelOldGC</td><br>    </tr><tr><td>Parallel New</td><td>CMS</td><td>-XX:+UseParNewGC -XX:+UseConcMarkSweepGC </td></tr><br>    <tr><td colspan="2">G1</td><td> -XX:+UseG1GC </td></tr><br></table>
+
+
+
+
+
+
+
+
+
 
           
         
