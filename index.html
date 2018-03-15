@@ -333,7 +333,23 @@
       
         
           
-            
+            <h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><ul>
+<li>堆参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-Xms : 初始堆大小</div><div class="line">-Xmx : 最大堆大小</div><div class="line">-Xmn : 新生代大小</div><div class="line">-XX:SurvivorRation : eden空间与Survivor比值</div><div class="line">-XX:NewRatio=老年代/新生代</div><div class="line">--XX:+HeapDumpOnOutOfMemoryError : OOM时存储堆快照</div><div class="line">-XX:HeapDumpPath : 指定堆快照位置</div></pre></td></tr></table></figure>
+<ul>
+<li>非堆部分</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-XX:MaxMetaspaceSize  : 元数据区最大值(默认最大系统可用内存)</div><div class="line">-Xss : 最大栈空间</div><div class="line">-XX:MaxDirectMemorySize : 直接内存(默认最大堆空间)</div></pre></td></tr></table></figure>
+<h2 id="调试命令"><a href="#调试命令" class="headerlink" title="调试命令"></a>调试命令</h2><ul>
+<li>打印日志</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-XX:+PrintGCDetails : 打印GC详细信息</div><div class="line">-XX:+PrintGCTimeStamps : 打印时间</div><div class="line">-Xloggc:path : 保存gc日志</div></pre></td></tr></table></figure>
+<ul>
+<li>查看系统参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-XX:PrintCommandLineFlags : 打印传递给jvm的显式或隐式参数</div><div class="line">-XX:PrintFlagsFinal : 打印系统参数值</div></pre></td></tr></table></figure>
+
           
         
       
