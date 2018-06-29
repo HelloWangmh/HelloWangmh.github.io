@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="vim," />
+  <meta name="keywords" content="设计模式," />
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="Vim的三个模式Vim共分为三个模式,如下图所示  进入编辑模式123456i : 光标前插入I : 光标当前行插入o : 光标当前行的下一行O : 光标当前行的上一行a : 光标后插入A : 光标所在行末尾插入 低行命令12345678910:表示进入低行模式,命令以回车结束q  : 退出q! : 强制退出w  : 保存wq : 保存退出help &amp;lt;command&amp;gt;: 显示相关命令e">
-<meta name="keywords" content="vim">
+<meta name="description" content="什么是策略模式? 策略模式定义了算法族,分别封装起来,让他们之间相互替换,此模式让算法的变化独立于使用算法的客户端. 相对于继承,可以理解为策略模式使用了组合的思想,将变化的行为抽象出来并封装为一系列类,不仅可以让行为与使用行为的客户端相互独立,还可以在运行的时候动态的改变客户端的行为  什么时候使用策略模式? 很多具有不同行为的相关类,策略模式可以为这些类配置某一行为. 当你需要一个算法有不同的">
+<meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vim学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/11/28/vim-learn/index.html">
+<meta property="og:title" content="设计模式学习之策略模式">
+<meta property="og:url" content="http://yoursite.com/2018/06/29/strategy-pattern/index.html">
 <meta property="og:site_name" content="学习笔记">
-<meta property="og:description" content="Vim的三个模式Vim共分为三个模式,如下图所示  进入编辑模式123456i : 光标前插入I : 光标当前行插入o : 光标当前行的下一行O : 光标当前行的上一行a : 光标后插入A : 光标所在行末尾插入 低行命令12345678910:表示进入低行模式,命令以回车结束q  : 退出q! : 强制退出w  : 保存wq : 保存退出help &amp;lt;command&amp;gt;: 显示相关命令e">
+<meta property="og:description" content="什么是策略模式? 策略模式定义了算法族,分别封装起来,让他们之间相互替换,此模式让算法的变化独立于使用算法的客户端. 相对于继承,可以理解为策略模式使用了组合的思想,将变化的行为抽象出来并封装为一系列类,不仅可以让行为与使用行为的客户端相互独立,还可以在运行的时候动态的改变客户端的行为  什么时候使用策略模式? 很多具有不同行为的相关类,策略模式可以为这些类配置某一行为. 当你需要一个算法有不同的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1flvwgadf3sj30mt0boq64.jpg">
-<meta property="og:updated_time" content="2017-11-28T14:22:02.000Z">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/d39a1775ly1fssf8oigdnj21em0qejxa.jpg">
+<meta property="og:updated_time" content="2018-06-29T14:47:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vim学习笔记">
-<meta name="twitter:description" content="Vim的三个模式Vim共分为三个模式,如下图所示  进入编辑模式123456i : 光标前插入I : 光标当前行插入o : 光标当前行的下一行O : 光标当前行的上一行a : 光标后插入A : 光标所在行末尾插入 低行命令12345678910:表示进入低行模式,命令以回车结束q  : 退出q! : 强制退出w  : 保存wq : 保存退出help &amp;lt;command&amp;gt;: 显示相关命令e">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1flvwgadf3sj30mt0boq64.jpg">
+<meta name="twitter:title" content="设计模式学习之策略模式">
+<meta name="twitter:description" content="什么是策略模式? 策略模式定义了算法族,分别封装起来,让他们之间相互替换,此模式让算法的变化独立于使用算法的客户端. 相对于继承,可以理解为策略模式使用了组合的思想,将变化的行为抽象出来并封装为一系列类,不仅可以让行为与使用行为的客户端相互独立,还可以在运行的时候动态的改变客户端的行为  什么时候使用策略模式? 很多具有不同行为的相关类,策略模式可以为这些类配置某一行为. 当你需要一个算法有不同的">
+<meta name="twitter:image" content="http://wx2.sinaimg.cn/mw690/d39a1775ly1fssf8oigdnj21em0qejxa.jpg">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/28/vim-learn/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/29/strategy-pattern/"/>
 
 
 
 
 
-  <title>Vim学习笔记 | 学习笔记</title>
+  <title>设计模式学习之策略模式 | 学习笔记</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/vim-learn/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/strategy-pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="骚动的石头">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vim学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式学习之策略模式</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:06:20+08:00">
-                2017-11-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T21:16:53+08:00">
+                2018-06-29
               </time>
             
 
@@ -332,16 +332,18 @@
       
 
       
-        <h2 id="Vim的三个模式"><a href="#Vim的三个模式" class="headerlink" title="Vim的三个模式"></a>Vim的三个模式</h2><p>Vim共分为三个模式,如下图所示</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1flvwgadf3sj30mt0boq64.jpg" alt=""></p>
-<h2 id="进入编辑模式"><a href="#进入编辑模式" class="headerlink" title="进入编辑模式"></a>进入编辑模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">i : 光标前插入</div><div class="line">I : 光标当前行插入</div><div class="line">o : 光标当前行的下一行</div><div class="line">O : 光标当前行的上一行</div><div class="line">a : 光标后插入</div><div class="line">A : 光标所在行末尾插入</div></pre></td></tr></table></figure>
-<h2 id="低行命令"><a href="#低行命令" class="headerlink" title="低行命令"></a>低行命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">:表示进入低行模式,命令以回车结束</div><div class="line">q  : 退出</div><div class="line">q! : 强制退出</div><div class="line">w  : 保存</div><div class="line">wq : 保存退出</div><div class="line">help &lt;command&gt;: 显示相关命令</div><div class="line">e file : 打开文件</div><div class="line">saveas file: 另存为</div><div class="line">split : 分屏</div><div class="line">vsplit : 垂直分屏</div></pre></td></tr></table></figure>
-<p>接下来的命令都是在一般模式下执行</p>
-<h2 id="光标移动命令"><a href="#光标移动命令" class="headerlink" title="光标移动命令"></a>光标移动命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0  : 到行头</div><div class="line">$  : 到行尾</div><div class="line">^  : 到本行第一个不是blank字符的位置（所谓blank字符就是空格，tab，换行，回车等）</div><div class="line">g_ : 到本行最后一个非black字符</div><div class="line">NG : 到第N行</div><div class="line">gg : 到第一行</div><div class="line">G  : 到最后一行</div><div class="line">*  : 根据光标所在单词,匹配到下一个</div><div class="line">#  : 根据光标所在单词,匹配到上一个</div><div class="line">hjkl : 分别表示上下左右</div><div class="line">/pattern : 搜索,n到下一个</div></pre></td></tr></table></figure>
-<h2 id="操作数据命令"><a href="#操作数据命令" class="headerlink" title="操作数据命令"></a>操作数据命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dd : 剪切所在行数据</div><div class="line">p  : 粘贴</div><div class="line">yy : 复制所在行数据</div><div class="line">u  : 撤销</div><div class="line">gU : 变大写</div><div class="line">gu : 变小写</div><div class="line">v  : 可视化,选择数据</div><div class="line">ctrl + r : 反撤销</div></pre></td></tr></table></figure>
-<h2 id="重复操作命令"><a href="#重复操作命令" class="headerlink" title="重复操作命令"></a>重复操作命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">. : 重复上一次的命令</div><div class="line">N&lt;command&gt; : 重复command N次</div></pre></td></tr></table></figure>
-<h2 id="块操作"><a href="#块操作" class="headerlink" title="块操作"></a>块操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Ctrl + v : 开始块操作,可以通过hjkl来控制方向,通过I插入,然后Esc后会对每一行都生效</div><div class="line">v : 可视化模式,可以操作选中的数据,</div><div class="line">	 如 J : 所有行连接, </div><div class="line">		&lt; 或 &gt; 进行左右缩进, </div><div class="line">		= : 自动给缩进</div></pre></td></tr></table></figure>
-<h2 id="宏录制"><a href="#宏录制" class="headerlink" title="宏录制"></a>宏录制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">qa : 开始录制,然后可以进行一系列操作</div><div class="line">q  : 停止录制</div><div class="line">@a : 重复刚才录制的宏,重复一次后可以直接通过@@调用</div></pre></td></tr></table></figure>
+        <h2 id="什么是策略模式"><a href="#什么是策略模式" class="headerlink" title="什么是策略模式?"></a>什么是策略模式?</h2><ul>
+<li>策略模式定义了算法族,分别封装起来,让他们之间相互替换,此模式让算法的变化独立于使用算法的客户端.</li>
+<li>相对于继承,可以理解为策略模式使用了组合的思想,将变化的行为抽象出来并封装为一系列类,不仅可以让行为与使用行为的客户端相互独立,还可以在运行的时候动态的改变客户端的行为</li>
+</ul>
+<h2 id="什么时候使用策略模式"><a href="#什么时候使用策略模式" class="headerlink" title="什么时候使用策略模式?"></a>什么时候使用策略模式?</h2><ul>
+<li>很多具有不同行为的相关类,策略模式可以为这些类配置某一行为.</li>
+<li>当你需要一个算法有不同的变体时候,这时候可以使用策略模式为客户端配置不同的算法实现.</li>
+<li>客户端可以不关注某一行为的具体复杂实现.</li>
+<li>当类中有很多行为,这些行为通过if语句来区分执行的时候,可以将他们配置到单独的策略类中.</li>
+</ul>
+<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="http://wx2.sinaimg.cn/mw690/d39a1775ly1fssf8oigdnj21em0qejxa.jpg" alt=""></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://github.com/HelloWangmh/java-learning/tree/master/src/main/java/wang/mh/designPatterns/strategy" target="_blank" rel="external">https://github.com/HelloWangmh/java-learning/tree/master/src/main/java/wang/mh/designPatterns/strategy</a></p>
 
       
     </div>
@@ -359,7 +361,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/vim/" rel="tag"># vim</a>
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
           
         </div>
       
@@ -372,8 +374,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/12/java9-learn/" rel="next" title="java9新特性学习">
-                <i class="fa fa-chevron-left"></i> java9新特性学习
+              <a href="/2018/03/15/jvm-03/" rel="next" title="jvm读书笔记-常用命令">
+                <i class="fa fa-chevron-left"></i> jvm读书笔记-常用命令
               </a>
             
           </div>
@@ -381,10 +383,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/24/lock-learn/" rel="prev" title="Lock锁原理及总结">
-                Lock锁原理及总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +523,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim的三个模式"><span class="nav-number">1.</span> <span class="nav-text">Vim的三个模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入编辑模式"><span class="nav-number">2.</span> <span class="nav-text">进入编辑模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#低行命令"><span class="nav-number">3.</span> <span class="nav-text">低行命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光标移动命令"><span class="nav-number">4.</span> <span class="nav-text">光标移动命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数据命令"><span class="nav-number">5.</span> <span class="nav-text">操作数据命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重复操作命令"><span class="nav-number">6.</span> <span class="nav-text">重复操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块操作"><span class="nav-number">7.</span> <span class="nav-text">块操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宏录制"><span class="nav-number">8.</span> <span class="nav-text">宏录制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是策略模式"><span class="nav-number">1.</span> <span class="nav-text">什么是策略模式?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候使用策略模式"><span class="nav-number">2.</span> <span class="nav-text">什么时候使用策略模式?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UML图"><span class="nav-number">3.</span> <span class="nav-text">UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
             
 
           </div>
