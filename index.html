@@ -262,6 +262,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/shell-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="骚动的石头">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/zilaiye.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/12/shell-learn/" itemprop="url">shell学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-12T17:00:13+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li>变量,等号和值之间不能出现空格</li>
+<li>引用一个变量的时候需要加上$</li>
+<li>命令替换 : 将命令输出赋给变量,通过反引号字符或$()</li>
+</ul>
+<h3 id="数学表达式"><a href="#数学表达式" class="headerlink" title="数学表达式"></a>数学表达式</h3><ul>
+<li>格式 : $[operation]  例如 : $[1 + 1]</li>
+<li>浮点数计算 : bc命令 内建变量scale控制精度</li>
+</ul>
+<h3 id="退出脚本"><a href="#退出脚本" class="headerlink" title="退出脚本"></a>退出脚本</h3><ul>
+<li>退出码 : $?变量保存着上一个命令退出后的状态码, 成功结束的状态码是0</li>
+<li>exit命令可以为脚本指定一个退出状态码</li>
+</ul>
+<h3 id="If语句"><a href="#If语句" class="headerlink" title="If语句"></a>If语句</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> command1 <span class="comment">#如果命令退出状态码是0 则为True</span></div><div class="line"><span class="keyword">then</span></div><div class="line">	commands</div><div class="line"><span class="keyword">elif</span> command2</div><div class="line"><span class="keyword">then</span></div><div class="line">	commands</div><div class="line"><span class="keyword">else</span></div><div class="line">	commands</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<ul>
+<li>test命令提供在if-then语句中测试不同条件的途径,如果test命令中条件成立,就会返回0状态码</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="built_in">test</span> conditon 或 <span class="keyword">if</span> [ condition ] 注意中括号两边的空格</div><div class="line">数值比较    : n1 -eq n2   是否相等</div><div class="line">字符串比较 : str1 = str2 检查字符串是否相同</div><div class="line">			-n str1 检查str1的长度是否大于0</div><div class="line">文件比较 : -d file  检查文件是否存在且是一个目录</div><div class="line"></div><div class="line">复合条件 : [ conditoin1 ] &amp;&amp; [ conditoin2 ]</div><div class="line">			[ conditoin1 ] || [ conditoin2 ]</div><div class="line">			</div><div class="line">双括号 : 双括号可以在比较过程中使用高级数学表达式</div><div class="line">			<span class="keyword">if</span> (( <span class="variable">$val</span> ** 2 &gt; 90 ))</div><div class="line"></div><div class="line">双方括号 : 提供了针对字符串比较的高级特性,如模式匹配</div><div class="line">			<span class="keyword">if</span> [[ <span class="variable">$val</span> == r* ]]</div><div class="line">			==将右边的r*视为一个模式,进行模式匹配</div></pre></td></tr></table></figure>
+<h3 id="case命令"><a href="#case命令" class="headerlink" title="case命令"></a>case命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> variable <span class="keyword">in</span></div><div class="line">pattern1 | pattern2) command1;;</div><div class="line">pattern3) command2;;</div><div class="line">*) commands;;</div></pre></td></tr></table></figure>
+<h3 id="for命令"><a href="#for命令" class="headerlink" title="for命令"></a>for命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> var <span class="keyword">in</span> list <span class="comment"># list可以是一系列用空格分割的值</span></div><div class="line"><span class="keyword">do</span></div><div class="line">	commands</div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="comment">#特殊环境变量IFS(内部字段分隔符)默认是空格或制表符或换行符,bash在数据中看到这些字符会认为这是列表中一个新数据的开始</span></div><div class="line"></div><div class="line"><span class="comment">#C语言风格的for循环</span></div><div class="line"><span class="keyword">for</span> (( i=1,j=2; i&lt;=10; i++,j++))</div><div class="line"><span class="keyword">do</span></div><div class="line">	commands</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<h3 id="while命令"><a href="#while命令" class="headerlink" title="while命令"></a>while命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> <span class="built_in">test</span> <span class="built_in">command</span>   <span class="comment">#这里可以有多个command,每个command单独一行,但是只有最后一个起作用</span></div><div class="line"><span class="keyword">do</span></div><div class="line">	commands</div><div class="line"><span class="keyword">done</span>  <span class="comment">#可以在这里将整个循环的输出&gt;到某个文件</span></div></pre></td></tr></table></figure>
+<h3 id="控制循环"><a href="#控制循环" class="headerlink" title="控制循环"></a>控制循环</h3><ul>
+<li>终止循环 : break可以跳出当前循环, break n n指定了跳出循环的层级</li>
+<li>中止某次循环 : continue命令,   continue n 同理</li>
+</ul>
+<p>###命令行参数</p>
+<ul>
+<li>读取参数 : $0是程序名, $1是第一个参数,直到$9,以后都是${10}</li>
+<li>basename会返回不包含路径的脚本吗  basename $0</li>
+<li>$# 表示命令行参数个数</li>
+<li>$* 会把所有参数当做一个单词保存</li>
+<li>$@ 会把所有参数当做同一字符串的多个独立的单词</li>
+<li>shift 命令能够移动命令行参数</li>
+</ul>
+<h3 id="read命令"><a href="#read命令" class="headerlink" title="read命令"></a>read命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#read命令可以从标准输入或另一个文件描述符中接受输入  </span></div><div class="line"><span class="built_in">read</span> -p <span class="string">"please input"</span> name</div><div class="line"><span class="comment">#也可以指定多个变量,如果输入太多,会全给最后一个变量</span></div><div class="line"><span class="built_in">read</span> name age</div><div class="line"><span class="comment">#-t 指定一个计时器 -n指定字符数</span></div><div class="line"></div><div class="line"><span class="comment">#从文件中读取</span></div><div class="line">cat file | <span class="keyword">while</span> <span class="built_in">read</span> line</div><div class="line"><span class="keyword">do</span></div><div class="line">	commands</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<h3 id="控制脚本"><a href="#控制脚本" class="headerlink" title="控制脚本"></a>控制脚本</h3><ul>
+<li>Linux利用信号与运行在系统中进程进行通信</li>
+<li>可以在脚本中用trap命令捕获信号</li>
+<li>在命令后加上 &amp; 可以以后台模式运行脚本,但是这样终端退出的话,后台进程也会退出</li>
+<li>nohup命令可以通过解除终端和进程的关联,来让一直让脚本在后台运行</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#定义函数</span></div><div class="line"><span class="keyword">function</span> name &#123;</div><div class="line">	commands</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">name</span></span>() &#123;</div><div class="line">	commands</div><div class="line">&#125;</div><div class="line"><span class="comment">#使用函数  指定函数名就可以</span></div><div class="line">name  </div><div class="line"><span class="comment">#返回值 默认是最后一条命令的返回码  也可以通过return命令指定返回值(0~255)</span></div><div class="line"></div><div class="line"><span class="comment">#函数可以使用参数环境变量获得参数值</span></div><div class="line"><span class="comment">#函数中的变量可以用local声明为局部变量,只在当前函数有效</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/01/strategy-decorator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1571,7 +1732,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1584,7 +1745,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
